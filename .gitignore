@@ -1,3 +1,6 @@
 raw/
 processed/
 .ipynb_checkpoints/
+.config/
+drive/
+sample_data/
