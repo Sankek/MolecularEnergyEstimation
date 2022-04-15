@@ -4,3 +4,4 @@ processed/
 .config/
 drive/
 sample_data/
+__pycache__/
