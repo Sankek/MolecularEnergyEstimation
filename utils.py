@@ -56,6 +56,7 @@ def load_model(model_state, model_config, epoch):
     if 'val_losses' in model_state:
         model_state['val_losses'] = state['val_losses']
     model_state['output_call'] = state['output_call']
+    model_state['trained_epochs'] = epoch
 
 
 def predict_test(model_state, model_config, dataloader):
