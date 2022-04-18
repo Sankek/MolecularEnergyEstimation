@@ -77,7 +77,7 @@ def predict_test(model_state, model_config, dataloader):
     return energies
 
 
-def make_submission(y_pred, competition_name):
+def make_submission(y_pred, competition_name, description='API Submission'):
     submission_data = {
         'id': np.arange(1, len(y_pred)+1),
         'energy': y_pred
@@ -88,7 +88,7 @@ def make_submission(y_pred, competition_name):
     kaggle_api = KaggleApi()
     kaggle_api.authenticate()
 
-    kaggle_api.competition_submit('submission.csv', 'API Submission', competition_name)
+    kaggle_api.competition_submit('submission.csv', description, competition_name)
 
 
 def change_lr(model_state, lr):
