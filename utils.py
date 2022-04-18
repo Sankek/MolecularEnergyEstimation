@@ -59,6 +59,16 @@ def load_model(model_state, model_config, epoch):
     model_state['trained_epochs'] = epoch
 
 
+def load_losses(path, name, epoch, device='cpu'):
+    state = torch.load(osp.join(path, name) + f'_{epoch}ep.pth', map_location=device)
+    train_losses = state['train_losses']
+    if 'val_losses' in state:
+        val_losses = state['val_losses']
+        return train_losses, val_losses
+
+    return train_losses
+
+
 def predict_test(model_state, model_config, dataloader):
     model = model_state['model']
     output_call = model_state['output_call']
