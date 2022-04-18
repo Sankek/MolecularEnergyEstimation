@@ -908,7 +908,7 @@ class MXMNet(nn.Module):
 
 
     def forward(self, data):
-        x = torch.LongTensor(element_to_idx(data.z))
+        x = data.x
         edge_index = data.edge_index
         pos = data.pos
         batch = data.batch
