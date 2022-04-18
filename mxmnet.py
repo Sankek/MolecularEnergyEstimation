@@ -206,9 +206,9 @@ class MessagePassing(torch.nn.Module):
 
 class Global_MP(MessagePassing):
 
-    def __init__(self, config):
+    def __init__(self, dim):
         super(Global_MP, self).__init__()
-        self.dim = config.dim
+        self.dim = dim
 
         self.h_mlp = MLP([self.dim, self.dim])
 
@@ -258,9 +258,9 @@ class Global_MP(MessagePassing):
 
 
 class Local_MP(torch.nn.Module):
-    def __init__(self, config):
+    def __init__(self, dim):
         super(Local_MP, self).__init__()
-        self.dim = config.dim
+        self.dim = dim
 
         self.h_mlp = MLP([self.dim, self.dim])
 
@@ -860,12 +860,12 @@ class MXMNet(nn.Module):
         self.sbf_2_mlp = MLP([num_spherical * num_radial, self.dim])
 
         self.global_layers = torch.nn.ModuleList()
-        for layer in range(config.n_layer):
-            self.global_layers.append(Global_MP(config))
+        for layer in range(self.n_layer):
+            self.global_layers.append(Global_MP(self.dim))
 
         self.local_layers = torch.nn.ModuleList()
-        for layer in range(config.n_layer):
-            self.local_layers.append(Local_MP(config))
+        for layer in range(self.n_layer):
+            self.local_layers.append(Local_MP(self.dim))
         
         self.init()
 
