@@ -8,7 +8,6 @@ import torch_geometric.data as tgd
 
 from ase.db import connect
 from tqdm.notebook import tqdm
-from kaggle.api.kaggle_api_extended import KaggleApi
 
 from processing import get_data
 
@@ -30,6 +29,7 @@ class MOSESDataset(tgd.InMemoryDataset):
         self.mode = mode
         
         if self.use_kaggle_api:
+            from kaggle.api.kaggle_api_extended import KaggleApi
             self.kaggle_api = KaggleApi()
             self.kaggle_api.authenticate()
         
