@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from tqdm.notebook import tqdm
 
 import torch
-from kaggle.api.kaggle_api_extended import KaggleApi
+
 
 
 def save_config(config, path):
@@ -95,6 +95,7 @@ def make_submission(y_pred, competition_name, description='API Submission'):
 
     pd.DataFrame(submission_data).to_csv('submission.csv', index=False)
 
+    from kaggle.api.kaggle_api_extended import KaggleApi
     kaggle_api = KaggleApi()
     kaggle_api.authenticate()
 
