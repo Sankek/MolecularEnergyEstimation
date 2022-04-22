@@ -13,7 +13,8 @@ from kaggle.api.kaggle_api_extended import KaggleApi
 from processing import get_data
 
 class MOSESDataset(tgd.InMemoryDataset):
-    def __init__(self, competition_name, root, mode, val_size=0.2, transform=None, pre_transform=None, pre_filter=None):
+    def __init__(self, competition_name, root, mode, val_size=0.2, transform=None, pre_transform=None, pre_filter=None, use_kaggle_api=True):
+        self.use_kaggle_api = use_kaggle_api
         self.competition_name = competition_name
         
         self.val_size = val_size
@@ -28,8 +29,9 @@ class MOSESDataset(tgd.InMemoryDataset):
             raise ValueError(f'{mode} mode not in {self.modes}')
         self.mode = mode
         
-        self.kaggle_api = KaggleApi()
-        self.kaggle_api.authenticate()
+        if self.use_kaggle_api:
+            self.kaggle_api = KaggleApi()
+            self.kaggle_api.authenticate()
         
         super().__init__(root, transform, pre_transform, pre_filter)
         self.data, self.slices = torch.load(self.processed_paths[self.load_idx[self.mode]])
@@ -37,7 +39,10 @@ class MOSESDataset(tgd.InMemoryDataset):
 
     @property
     def raw_file_names(self):
-        return [str(f) for f in self.kaggle_api.competition_list_files(self.competition_name)]
+        if self.use_kaggle_api:
+            return [str(f) for f in self.kaggle_api.competition_list_files(self.competition_name)]
+        else:
+            return ['ase_database_example.py', 'sample_submission.csv', 'train.db', 'test.db']
 
     @property
     def processed_file_names(self):
